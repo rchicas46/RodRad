@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RodRAD · Re-irradiation Series · Episode 1: Thorax</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --blue-900: #0c2d6b;
+  --blue-800: #1a4a9a;
+  --blue-700: #1e5cb8;
+  --blue-600: #2471d4;
+  --blue-500: #3b8aea;
+  --blue-400: #6aaaf0;
+  --blue-200: #b8d8f8;
+  --blue-100: #dceeff;
+  --blue-50:  #f0f7ff;
+  --white:    #ffffff;
+  --off-white:#f7f9fc;
+  --gray-100: #eef1f6;
+  --gray-200: #dde2eb;
+  --gray-300: #bbc4d4;
+  --gray-500: #6b7a96;
+  --gray-700: #374260;
+  --gray-900: #0f1c38;
+  --green:    #1a7a4a;
+  --green-bg: #edf7f2;
+  --orange:   #b86a00;
+  --orange-bg:#fff8ec;
+  --red:      #b02020;
+  --red-dark: #7a0e0e;
+  --red-bg:   #fff2f2;
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+  --mono:  'DM Mono', monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--off-white);color:var(--gray-900);font-size:14px;line-height:1.6;}
+
+/* HEADER */
+.site-header{background:var(--blue-800);color:var(--white);position:sticky;top:0;z-index:100;border-bottom:3px solid var(--blue-500);}
+.header-inner{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:58px;}
+.brand{display:flex;align-items:baseline;gap:10px;}
+.brand-name{font-family:var(--serif);font-size:24px;color:var(--white);letter-spacing:.02em;}
+.brand-dot{color:var(--blue-400);font-size:20px;}
+.brand-series{font-size:11px;color:var(--blue-200);letter-spacing:.1em;text-transform:uppercase;font-weight:300;}
+.episode-tag{font-family:var(--mono);font-size:10px;background:var(--blue-600);color:var(--white);padding:4px 12px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;border:1px solid var(--blue-400);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--blue-900) 0%,var(--blue-700) 100%);color:var(--white);padding:48px 24px 44px;border-bottom:4px solid var(--blue-500);}
+.hero-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr auto;gap:40px;align-items:end;}
+.hero-ep{font-family:var(--mono);font-size:11px;color:var(--blue-200);letter-spacing:.15em;text-transform:uppercase;margin-bottom:10px;}
+.hero-title{font-family:var(--serif);font-size:clamp(30px,4vw,48px);line-height:1.05;color:var(--white);margin-bottom:14px;}
+.hero-title em{color:var(--blue-400);font-style:italic;}
+.hero-sub{font-size:13px;color:var(--blue-200);font-weight:300;max-width:520px;line-height:1.75;}
+.hero-badges{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap;}
+.hbadge{font-family:var(--mono);font-size:10px;padding:3px 10px;border:1px solid var(--blue-500);border-radius:20px;color:var(--blue-200);letter-spacing:.04em;text-transform:uppercase;}
+.hbadge-solid{background:var(--blue-600);border-color:var(--blue-400);color:var(--white);}
+.hero-author{font-family:var(--serif);font-size:20px;color:var(--white);margin-bottom:5px;}
+.hero-affil{font-size:11px;color:var(--blue-300,#90b8e8);line-height:1.6;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:32px 24px 80px;}
+
+/* SECTION */
+.sec-head{display:flex;align-items:center;gap:12px;margin:0 0 14px;}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--blue-700);background:var(--blue-100);border:1px solid var(--blue-200);padding:2px 9px;border-radius:20px;letter-spacing:.05em;font-weight:500;}
+.sec-title{font-family:var(--serif);font-size:17px;color:var(--gray-900);font-weight:400;}
+.divider{border:none;border-top:1px solid var(--gray-200);margin:28px 0;}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--gray-200);border-radius:8px;padding:20px 24px;margin-bottom:16px;box-shadow:0 1px 4px rgba(36,113,212,.05);}
+
+/* ORGAN */
+.organ-select-wrap{position:relative;}
+.organ-select-wrap select{width:100%;appearance:none;background:var(--white);border:1.5px solid var(--gray-300);border-radius:6px;padding:10px 40px 10px 14px;font-family:var(--sans);font-size:14px;color:var(--gray-900);cursor:pointer;transition:border-color .15s;}
+.organ-select-wrap select:focus{outline:none;border-color:var(--blue-600);}
+.organ-select-wrap::after{content:'▾';position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--gray-500);pointer-events:none;}
+.organ-desc{margin-top:10px;padding:10px 14px;background:var(--blue-50);border-radius:6px;font-size:12px;color:var(--gray-700);line-height:1.6;border-left:3px solid var(--blue-500);}
+
+/* FIELDS */
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:11px;font-weight:500;color:var(--gray-500);text-transform:uppercase;letter-spacing:.07em;}
+.field input,.field select{border:1.5px solid var(--gray-300);border-radius:6px;padding:9px 12px;font-family:var(--mono);font-size:14px;color:var(--gray-900);background:var(--white);transition:border-color .15s;width:100%;}
+.field input:focus,.field select:focus{outline:none;border-color:var(--blue-600);}
+.calc-display{border:1.5px solid var(--blue-200);border-radius:6px;padding:9px 12px;font-family:var(--mono);font-size:15px;font-weight:500;color:var(--blue-700);background:var(--blue-50);}
+
+/* TABS */
+.tab-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.tab-btn{padding:7px 16px;font-size:12px;font-weight:500;border:1.5px solid var(--gray-300);border-radius:20px;background:transparent;color:var(--gray-500);cursor:pointer;transition:all .15s;letter-spacing:.02em;}
+.tab-btn:hover{border-color:var(--blue-500);color:var(--blue-700);}
+.tab-act-qd  {border-color:var(--blue-600)!important;color:var(--blue-700)!important;background:var(--blue-50)!important;}
+.tab-act-bid {border-color:var(--orange)!important;color:var(--orange)!important;background:var(--orange-bg)!important;}
+.tab-act-sbrt{border-color:var(--red)!important;color:var(--red)!important;background:var(--red-bg)!important;}
+
+/* XPANELS */
+.xpanel{border-radius:6px;padding:14px 16px;margin-top:12px;border:1px solid;font-size:12px;}
+.xbid {background:var(--orange-bg);border-color:#e8a030;}
+.xsbrt{background:var(--red-bg);  border-color:#d08080;}
+.xoar {background:var(--blue-50); border-color:var(--blue-300);}
+.xrec {background:var(--green-bg);border-color:#a0d4b8;}
+.xpanel-title{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;}
+.xbid  .xpanel-title{color:var(--orange);}
+.xsbrt .xpanel-title{color:var(--red);}
+.xoar  .xpanel-title{color:var(--blue-700);}
+.xrec  .xpanel-title{color:var(--green);}
+.xrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;color:var(--gray-700);}
+.xrow input{width:80px;}
+.cinfo{font-size:11px;color:var(--gray-500);margin-top:6px;line-height:1.5;}
+
+/* OAR BUTTONS */
+.oar-mode-row{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;}
+.oar-btn{font-size:11px;font-weight:500;padding:5px 14px;border:1.5px solid var(--gray-300);border-radius:20px;background:transparent;color:var(--gray-500);cursor:pointer;transition:all .15s;}
+.oar-btn.act{background:var(--blue-100);border-color:var(--blue-600);color:var(--blue-800);}
+
+/* SCENARIO CARDS */
+.scen-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:10px 0;}
+.scen-card{border:1.5px solid var(--gray-200);border-radius:8px;padding:12px 14px;cursor:pointer;transition:all .15s;background:var(--white);}
+.scen-card:hover{border-color:var(--blue-400);}
+.scen-card.s-opt {border-color:var(--green);background:var(--green-bg);}
+.scen-card.s-cons{border-color:var(--blue-600);background:var(--blue-50);}
+.scen-card.s-min {border-color:var(--orange);background:var(--orange-bg);}
+.scen-label{font-family:var(--mono);font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px;}
+.s-opt  .scen-label{color:var(--green);}
+.s-cons .scen-label{color:var(--blue-700);}
+.s-min  .scen-label{color:var(--orange);}
+.scen-factors{display:flex;flex-direction:column;gap:3px;}
+.sf{font-size:10px;color:var(--gray-500);line-height:1.4;}
+.sf-ok  {color:var(--green);}
+.sf-inf {color:var(--blue-700);}
+.sf-wrn {color:var(--orange);}
+
+/* TIM TABLE */
+.tim-wrap{overflow-x:auto;margin-top:10px;}
+.tim-table{width:100%;border-collapse:collapse;font-size:11px;min-width:300px;}
+.tim-table th{text-align:left;font-weight:500;color:var(--gray-500);padding:5px 8px;border-bottom:1px solid var(--gray-200);font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;}
+.tim-table td{padding:5px 8px;border-bottom:1px solid var(--gray-100);}
+.tim-match{background:var(--blue-100);}
+.tim-match td{color:var(--blue-800);font-weight:500;}
+
+/* ALERTS */
+.alert{font-size:11px;padding:8px 12px;border-radius:6px;margin-top:8px;line-height:1.5;}
+.al-warn{background:var(--orange-bg);border:1px solid #e8a030;color:#7a4400;}
+.al-dng {background:var(--red-bg);  border:1px solid #d08080;color:#7a1010;}
+.al-info{background:var(--blue-50); border:1px solid var(--blue-300);color:var(--blue-800);}
+
+/* RESULTS */
+.results-card{background:var(--white);color:var(--gray-900);border-radius:10px;padding:26px;margin-top:8px;border:1px solid var(--gray-200);box-shadow:0 1px 4px rgba(36,113,212,.07);}
+.results-header{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;}
+.res-title{font-family:var(--serif);font-size:19px;color:var(--gray-900);}
+.rbadge{font-family:var(--mono);font-size:10px;padding:4px 12px;border-radius:20px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
+.rb-ok  {background:#1a7a4a;color:#fff;}
+.rb-warn{background:#b86a00;color:#fff;}
+.rb-dng {background:#b02020;color:#fff;}
+
+.metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:22px;}
+.metric{background:var(--gray-100);border:1px solid var(--gray-200);border-radius:6px;padding:12px 14px;}
+.metric-label{font-size:10px;color:var(--gray-500);margin-bottom:4px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase;}
+.metric-value{font-family:var(--mono);font-size:20px;font-weight:500;color:var(--gray-900);}
+.metric-unit{font-size:10px;color:var(--gray-500);}
+.metric.hi {border-color:var(--blue-500);}.metric.hi  .metric-value{color:var(--blue-700);}
+.metric.ok {border-color:#1a7a4a;}.metric.ok  .metric-value{color:#1a7a4a;}
+.metric.dng{border-color:#b02020;}.metric.dng .metric-value{color:#b02020;}
+.metric.wrn{border-color:#b86a00;}.metric.wrn .metric-value{color:#b86a00;}
+
+/* BAR */
+.bar-section{margin:16px 0;}
+.bar-label{font-family:var(--mono);font-size:10px;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;}
+.thr-detail{margin-top:12px;display:flex;flex-direction:column;gap:4px;}
+.thr-row{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:11px;color:var(--gray-500);padding:4px 0;border-bottom:1px solid var(--gray-200);}
+.thr-row:last-child{border-bottom:none;}
+.thr-row.active{color:var(--gray-900);font-weight:500;}
+.src-pill{font-family:var(--mono);font-size:10px;padding:1px 8px;border-radius:20px;border:1px solid;font-weight:500;flex-shrink:0;}
+.sp-ars {border-color:#4a9af8;color:#9ad0fc;background:rgba(74,154,248,.15);}
+.sp-ntcp{border-color:#2aaa6a;color:#7adea0;background:rgba(42,170,106,.15);}
+.sp-rul {border-color:#e8a030;color:#f8d080;background:rgba(232,160,48,.15);}
+.sp-obs {border-color:var(--gray-300);color:var(--gray-600,#4a5670);background:var(--gray-100);}
+.curr-tag{font-size:10px;background:var(--blue-100);color:var(--blue-700);padding:1px 7px;border-radius:20px;border:1px solid var(--blue-200);}
+
+/* REC BOX */
+.rec-box{border-radius:6px;padding:16px 18px;margin-top:16px;border-left:4px solid;}
+.rec-ok  {background:var(--green-bg);border-color:#1a7a4a;}
+.rec-warn{background:var(--orange-bg);border-color:#b86a00;}
+.rec-dng {background:var(--red-bg);border-color:#b02020;}
+.rec-title{font-family:var(--serif);font-size:15px;margin-bottom:10px;}
+.rec-ok   .rec-title{color:var(--green);}
+.rec-warn .rec-title{color:var(--orange);}
+.rec-dng  .rec-title{color:var(--red);}
+.rec-items{display:flex;flex-direction:column;gap:5px;}
+.rec-item{display:flex;gap:8px;font-size:11px;line-height:1.5;align-items:flex-start;color:var(--gray-700);}
+.rdot{width:8px;height:8px;border-radius:50%;margin-top:4px;flex-shrink:0;}
+.dok{background:#2aaa6a;}.dwrn{background:#c08020;}.ddng{background:#c03030;}.dinf{background:#3b8aea;}
+.rec-concl{font-size:12px;font-weight:500;color:var(--gray-900);margin-top:12px;padding-top:10px;border-top:1px solid var(--gray-200);}
+
+/* TIM C2 */
+.tim-c2-box{background:var(--blue-50);border:1px solid var(--blue-200);border-radius:6px;padding:10px 14px;font-size:11px;color:var(--gray-700);margin-top:12px;}
+
+/* NOTE & REFS */
+.note-box{font-size:11px;color:var(--gray-500);border-top:1px solid var(--gray-200);padding-top:16px;margin-top:20px;line-height:1.7;}
+.refs-box{font-family:var(--mono);font-size:10px;color:var(--gray-400,#8898b0);border-top:1px solid var(--gray-200);padding-top:12px;margin-top:8px;line-height:1.9;}
+
+/* DISCLAIMER */
+.disclaimer{background:var(--blue-50);border:1px solid var(--blue-200);border-top:3px solid var(--blue-500);border-radius:8px;padding:20px 24px;margin-top:32px;}
+.disclaimer-title{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--blue-700);margin-bottom:8px;}
+.disclaimer p{font-size:11px;color:var(--gray-700);line-height:1.7;}
+
+/* FOOTER */
+.site-footer{background:var(--blue-900);border-top:3px solid var(--blue-600);padding:22px 24px;text-align:center;}
+.footer-inner{max-width:1100px;margin:0 auto;}
+.footer-brand{font-family:var(--serif);font-size:17px;color:var(--white);margin-bottom:4px;}
+.footer-sub{font-size:11px;color:var(--blue-300,#90b8e8);}
+
+/* OAR RESULT */
+.oar-result{margin-top:10px;padding:8px 14px;background:var(--blue-100);border-radius:6px;border:1px solid var(--blue-200);display:flex;gap:20px;align-items:center;flex-wrap:wrap;}
+.oar-val{font-family:var(--mono);font-weight:500;color:var(--blue-800);font-size:16px;}
+
+/* REC GRID */
+.rec-num-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;}
+.rec-num-cell{background:var(--white);border-radius:6px;padding:10px 12px;border:1.5px solid var(--gray-200);}
+.rec-num-label{font-size:10px;font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;color:var(--gray-500);margin-bottom:3px;line-height:1.4;}
+.rec-num-val{font-family:var(--mono);font-size:19px;font-weight:500;}
+
+@media(max-width:640px){
+  .hero-inner,.g3,.scen-grid{grid-template-columns:1fr;}
+  .g2{grid-template-columns:1fr;}
+  .hero-meta{text-align:left;}
+}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <span class="brand-name">RodRAD</span>
+      <span class="brand-dot">·</span>
+      <span class="brand-series">Re-irradiation Series</span>
+    </div>
+    <div class="episode-tag">Episode 1 · Thorax</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-ep">RodRAD · Re-irradiation Series · Episode 1</div>
+      <h1 class="hero-title">Re-irradiation<br><em>Thorax</em></h1>
+      <p class="hero-sub">EQD2 cumulative dose calculator for thoracic organs at risk. Evidence-based thresholds with recovery factor modelling and OAR dose estimation.</p>
+      <div class="hero-badges">
+        <span class="hbadge hbadge-solid">LQ Model</span>
+        <span class="hbadge hbadge-solid">Lea-Catcheside</span>
+        <span class="hbadge">Timmermann 2022</span>
+        <span class="hbadge">ARS 2025</span>
+        <span class="hbadge">ESTRO 2026</span>
+        <span class="hbadge">RETHO 2026</span>
+      </div>
+    </div>
+    <div class="hero-meta" style="text-align:right;">
+      <div class="hero-author">Dr. Rod</div>
+      <div class="hero-affil">Oncología Radioterápica<br>Hospital Universitari i Politècnic La Fe<br>Hospital ASCIRES · Valencia, España</div>
+    </div>
+  </div>
+</section>
+
+<main class="main">
+
+<div class="sec-head"><span class="sec-num">01</span><span class="sec-title">Órgano de riesgo</span></div>
+<div class="card">
+  <div class="organ-select-wrap">
+    <select id="organ" onchange="updateOrganInfo();calculate()">
+      <option value="cord">Médula espinal</option>
+      <option value="esophagus">Esófago</option>
+      <option value="trachea">Árbol bronquial / bronquio principal</option>
+      <option value="lung">Pulmón (global)</option>
+      <option value="heart">Corazón / pericardio</option>
+      <option value="brachial">Plexo braquial</option>
+    </select>
+  </div>
+  <div class="organ-desc" id="organ-info"></div>
+
+  <!-- AB SELECTOR -->
+  <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;align-items:start;">
+    <div class="field">
+      <label>α/β del OAR (Gy)</label>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <select id="ab_preset" onchange="applyAbPreset();calculate()" style="flex:1;">
+          <option value="2">2 Gy — tejido nervioso tardío</option>
+          <option value="3" selected>3 Gy — tejido tardío general</option>
+          <option value="10">10 Gy — mucosa / respuesta rápida</option>
+          <option value="custom">Personalizado</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" id="ab_custom_wrap" style="display:none;">
+      <label>Valor personalizado (Gy)</label>
+      <input type="number" id="ab_custom" value="3" min="0.5" max="20" step="0.5" oninput="calculate()">
+    </div>
+    <div style="padding:8px 12px;background:var(--blue-50);border:1px solid var(--blue-200);border-radius:6px;font-size:11px;color:var(--gray-700);line-height:1.7;" id="ab_evidence_box">
+      <strong style="color:var(--blue-700);">Evidencia del α/β</strong><br>
+      <span id="ab_evidence_text">Convención clínica tejido tardío general (Thames et al. 1990, Fowler 1989). Sin dato directo humano para este órgano.</span>
+    </div>
+  </div>
+  <div class="cinfo" style="margin-top:6px;">
+    El α/β del órgano seleccionado se carga automáticamente según la evidencia disponible. Puedes ajustarlo manualmente para análisis de sensibilidad.
+    <span style="font-family:var(--mono);font-size:10px;background:var(--blue-100);padding:1px 7px;border-radius:20px;color:var(--blue-700);border:1px solid var(--blue-300);">ESTRO Appelt 2026 CS-12</span>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="sec-head"><span class="sec-num">02</span><span class="sec-title">Primer curso de radioterapia</span></div>
+<div class="card">
+  <div class="tab-row">
+    <button class="tab-btn tab-act-qd"  id="tab-qd"   onclick="setMode('QD')">Convencional (QD)</button>
+    <button class="tab-btn"             id="tab-bid"  onclick="setMode('BID')">Hiperfraccionado (BID)</button>
+    <button class="tab-btn"             id="tab-sbrt" onclick="setMode('SBRT')">SBRT / SABR</button>
+  </div>
+  <div class="g3">
+    <div class="field"><label>Dosis total (Gy)</label><input type="number" id="d1t" value="60" min="0" step="0.5" oninput="calculate()"></div>
+    <div class="field"><label>Nº fracciones</label><input type="number" id="d1n" value="30" min="1" step="1" oninput="calculate()"></div>
+    <div class="field"><label>Dosis / fx — calculado</label><div class="calc-display" id="d1dpf_show">2.00 Gy</div></div>
+  </div>
+
+  <div class="xpanel xbid" id="bid-panel" style="display:none">
+    <div class="xpanel-title">Corrección por reparación incompleta (Lea-Catcheside)</div>
+    <div class="xrow"><span>Intervalo BID (h):</span><input type="number" id="bid_h" value="6" min="3" max="12" step="0.5" oninput="calculate()"><span style="font-family:var(--mono);font-size:12px;">Factor g = <strong id="g-factor">—</strong></span></div>
+    <div class="cinfo" id="corr-info"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;" id="eqd2-cmp"></div>
+  </div>
+
+  <div class="xpanel xsbrt" id="sbrt-panel" style="display:none">
+    <div class="xpanel-title">Timmermann Tables — agosto 2021</div>
+    <div class="tim-wrap"><table class="tim-table" id="tim-table"></table></div>
+    <div id="sbrt-alert"></div>
+    <div class="cinfo" style="margin-top:6px;">Para dosis/fx ≥ 8 Gy considerar modelo <strong>LQ-L</strong> (Guerrero &amp; Li, 2004).</div>
+  </div>
+
+  <div class="xpanel xoar" style="margin-top:14px;">
+    <div class="xpanel-title">Estimador de dosis real al OAR en C1</div>
+    <div class="cinfo" style="margin-top:0;margin-bottom:10px;">El OAR raramente recibe la dosis prescrita completa. <span style="font-family:var(--mono);font-size:10px;background:var(--blue-100);padding:1px 7px;border-radius:20px;color:var(--blue-700);border:1px solid var(--blue-300);">ESTRO Appelt 2026 CS-3</span></div>
+    <div class="oar-mode-row">
+      <button class="oar-btn act" id="oar-btn-pct"   onclick="setOarMode('pct')">% dosis prescrita</button>
+      <button class="oar-btn"     id="oar-btn-dvh"   onclick="setOarMode('dvh')">Dato DVH conocido</button>
+      <button class="oar-btn"     id="oar-btn-presc" onclick="setOarMode('presc')">Sin datos (peor caso)</button>
+    </div>
+    <div id="oar-pct-panel">
+      <div class="g2" style="align-items:center;">
+        <div class="field"><label>% dosis prescrita al OAR</label><input type="range" id="oar_pct" min="10" max="100" step="5" value="50" oninput="updateOarPct();calculate()"></div>
+        <div><div style="font-family:var(--mono);font-size:22px;font-weight:500;color:var(--blue-700);" id="oar_pct_show">50%</div><div style="font-size:11px;color:var(--gray-500);" id="oar_pct_equiv">= 30.0 Gy al OAR</div></div>
+      </div>
+      <div class="cinfo" style="margin-top:8px;line-height:1.8;"><strong>Referencia rápida</strong> (Emami 1991 · QUANTEC 2010 · Timmermann 2022):<br>· Médula <strong>adyacente PTV</strong>: 50–80% · <strong>alejada</strong>: 20–40%<br>· Esófago <strong>incluido en campo</strong>: 70–100% · <strong>parcial</strong>: 40–70%<br>· Bronquio <strong>ultra-central</strong>: 80–100% · <strong>periférico</strong>: 30–60%<br>· Pulmón Dmedia: 15–35% según V20 · Corazón: 10–80% según localización</div>
+    </div>
+    <div id="oar-dvh-panel" style="display:none">
+      <div class="g2">
+        <div class="field"><label>Dosis física OAR en C1 (Gy)</label><input type="number" id="oar_dvh_gy" value="45" min="0" step="0.5" oninput="calculate()"></div>
+        <div class="field"><label>Parámetro DVH</label><select id="oar_dvh_param" onchange="calculate()"><option value="dmax">Dmax / D0.1cc</option><option value="dmean">Dmedia</option><option value="d1cc">D1cc</option></select></div>
+      </div>
+      <div class="cinfo" style="margin-top:6px;">La dosis física se convertirá a EQD2 con el α/β del órgano y el nº de fracciones del C1. <span style="font-family:var(--mono);font-size:10px;background:var(--blue-100);padding:1px 7px;border-radius:20px;color:var(--blue-700);border:1px solid var(--blue-300);">ESTRO CS-11</span></div>
+    </div>
+    <div id="oar-presc-panel" style="display:none"><div class="alert al-info">Peor caso (ESTRO CS-3): se asume dosis prescrita completa al OAR. Sobreestima la dosis real — usar solo sin ningún dato dosimétrico del C1.</div></div>
+    <div class="oar-result"><div><span style="font-size:11px;color:var(--gray-500);">Dosis OAR C1 (física): </span><span class="oar-val" id="oar_gy_used">—</span></div><div><span style="font-size:11px;color:var(--gray-500);">→ EQD2: </span><span class="oar-val" id="oar_eqd2_show">—</span></div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="sec-head"><span class="sec-num">03</span><span class="sec-title">Factor de recuperación tisular</span></div>
+<div class="card">
+  <div class="xpanel xrec" style="margin:0;">
+    <div class="xpanel-title">FR = R<sub>máx</sub>·(1−e<sup>−λt</sup>) · Dale 1990 · Ang 2001 · Nieder 2006 · ESTRO Appelt 2026</div>
+    <div class="xrow" style="margin-bottom:12px;"><span>Meses desde fin del C1:</span><input type="number" id="months" value="12" min="0" max="120" step="1" oninput="calculate()" style="width:80px;"><span style="font-family:var(--mono);font-size:12px;color:var(--gray-500);" id="months-yr"></span></div>
+    <div class="scen-grid">
+      <div class="scen-card" id="card-opt" onclick="setScen('opt')">
+        <div class="scen-label">Optimista</div>
+        <div class="scen-factors">
+          <span class="sf sf-ok">✓ Intervalo ≥ 24 meses</span>
+          <span class="sf sf-ok">✓ Sin toxicidad tardía del C1</span>
+          <span class="sf sf-ok">✓ Dosis C1 lejos del límite</span>
+          <span class="sf sf-ok">✓ DVH 3D disponible</span>
+          <span class="sf sf-ok">✓ α/β alto (ej. esófago)</span>
+          <span class="sf sf-ok">✓ Intención curativa</span>
+        </div>
+      </div>
+      <div class="scen-card s-cons" id="card-cons" onclick="setScen('cons')">
+        <div class="scen-label">Conservador ✓</div>
+        <div class="scen-factors">
+          <span class="sf sf-inf">→ Intervalo 12–24 meses</span>
+          <span class="sf sf-inf">→ Toxicidad tardía leve o ausente</span>
+          <span class="sf sf-inf">→ Dosis C1 dentro de tolerancia</span>
+          <span class="sf sf-inf">→ Solo suma de máximos (sin DVH 3D)</span>
+          <span class="sf sf-inf">→ Sin datos específicos del órgano</span>
+          <span class="sf sf-inf">→ Estándar ESTRO CS-13</span>
+        </div>
+      </div>
+      <div class="scen-card" id="card-min" onclick="setScen('min')">
+        <div class="scen-label">Mínimo</div>
+        <div class="scen-factors">
+          <span class="sf sf-wrn">⚠ Intervalo &lt; 12 meses</span>
+          <span class="sf sf-wrn">⚠ Toxicidad tardía activa del C1</span>
+          <span class="sf sf-wrn">⚠ Dosis C1 próxima al límite</span>
+          <span class="sf sf-wrn">⚠ Re-SBRT sobre campo SBRT</span>
+          <span class="sf sf-wrn">⚠ α/β bajo + comorbilidades</span>
+          <span class="sf sf-wrn">⚠ DM, vasculopatía, fibrosis</span>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:10px;color:var(--gray-500);margin-top:6px;">Ang 2001 · Nieder 2006 · Joiner &amp; van der Kogel 2009 · ESTRO Appelt 2026 (CS-13, CS-33) · Simone/ARS 2025</div>
+    <div class="rec-num-grid" id="rec-grid"></div>
+    <div class="cinfo" id="rec-formula" style="margin-top:8px;"></div>
+    <div class="cinfo" id="rec-ev" style="margin-top:4px;line-height:1.7;"></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="sec-head"><span class="sec-num">04</span><span class="sec-title">Nuevo curso propuesto</span></div>
+<div class="card">
+  <div class="g3">
+    <div class="field"><label>Dosis total (Gy)</label><input type="number" id="d2t" value="45" min="0" step="0.5" oninput="calculate()"></div>
+    <div class="field"><label>Nº fracciones</label><input type="number" id="d2n" value="15" min="1" step="1" oninput="calculate()"></div>
+    <div class="field"><label>Dosis / fx — calculado</label><div class="calc-display" id="d2dpf_show">3.00 Gy</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="sec-head"><span class="sec-num">05</span><span class="sec-title">Resultados</span></div>
+<div class="results-card">
+  <div class="results-header"><span class="res-title" id="res-title">—</span><span class="rbadge" id="risk-badge"></span><span class="rbadge" id="sbrt-badge" style="display:none;background:#7a4a00;"></span></div>
+  <div class="metrics-grid" id="res-grid"></div>
+  <div class="bar-section">
+    <div class="bar-label" id="bar-label">Umbrales clínicos con fuentes — EQD2 (α/β por órgano)</div>
+    <div id="thr-svg"></div>
+    <div class="thr-detail" id="thr-detail"></div>
+  </div>
+  <div id="tim-c2"></div>
+  <div id="rec-box"></div>
+</div>
+
+<div class="note-box" id="note-txt"></div>
+<div class="refs-box" id="refs-block"></div>
+
+<div class="disclaimer">
+  <div class="disclaimer-title">Aviso legal · Clinical Disclaimer</div>
+  <p><strong>RodRAD Re-irradiation Series</strong> es una herramienta de apoyo clínico basada en modelos radiobiológicos (LQ, Lea-Catcheside) y evidencia publicada. No sustituye la evaluación dosimétrica 3D, el DVH real, ni el criterio del equipo multidisciplinar. Las estimaciones deben interpretarse en el contexto clínico individual de cada paciente. El autor no asume responsabilidad por decisiones terapéuticas basadas exclusivamente en esta herramienta. El uso de esta calculadora implica la aceptación de estos términos.</p>
+</div>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="footer-brand">RodRAD · Re-irradiation Series</div>
+    <div class="footer-sub">Dr. Rod · Hospital Universitari i Politècnic La Fe · Hospital ASCIRES · Valencia, España · Episode 1: Thorax</div>
+  </div>
+</footer>
+
+<script>
+const TIM={cord:{rows:[{fx:1,vol:'<0.35cm³',vM:10,pM:14},{fx:2,vol:'<0.35cm³',vM:13,pM:18.3},{fx:3,vol:'<0.35cm³',vM:15.9,pM:22.5},{fx:4,vol:'<0.35cm³',vM:18,pM:25.6},{fx:5,vol:'<0.35cm³',vM:22,pM:28},{fx:8,vol:'<0.35cm³',vM:26.4,pM:33.6},{fx:10,vol:'<5cm³',vM:31,pM:null},{fx:15,vol:'<5cm³',vM:39,pM:null},{fx:20,vol:'<5cm³',vM:42,pM:null},{fx:30,vol:'<5cm³',vM:47.4,pM:null}],note:'Para ≥10fx: <5cm³.'},esophagus:{rows:[{fx:1,vol:'<5cm³',vM:20,pM:24},{fx:2,vol:'<5cm³',vM:24.3,pM:28.3},{fx:3,vol:'<5cm³',vM:27.9,pM:32.4},{fx:4,vol:'<5cm³',vM:30.4,pM:35.6},{fx:5,vol:'<5cm³',vM:32.5,pM:38},{fx:8,vol:'<5cm³',vM:36.8,pM:43.2},{fx:10,vol:'<5cm³',vM:40,pM:null},{fx:15,vol:'<5cm³',vM:45,pM:null},{fx:20,vol:'<5cm³',vM:48,pM:null},{fx:30,vol:'<5cm³',vM:51,pM:null}],note:'Evitar irradiación circunferencial.'},trachea:{rows:[{fx:1,vol:'<4cm³',vM:27.5,pM:30},{fx:2,vol:'<4cm³',vM:34.5,pM:38},{fx:3,vol:'<5cm³',vM:39,pM:43},{fx:4,vol:'<5cm³',vM:42.4,pM:47},{fx:5,vol:'<5cm³',vM:45,pM:50},{fx:8,vol:'<5cm³',vM:50,pM:56},{fx:10,vol:'<5cm³',vM:52,pM:null},{fx:15,vol:'<5cm³',vM:55.5,pM:null},{fx:20,vol:'<5cm³',vM:58,pM:null},{fx:30,vol:'<5cm³',vM:60,pM:null}],note:'Hasta 1ª bifurcación del bronquio lobar.'},lung:{rows:[{fx:1,vol:'1500♂/950♀',vM:7.2,pM:null,ex:'V8.4Gy<37%'},{fx:2,vol:'1500♂/950♀',vM:9.4,pM:null,ex:'V10Gy<37%'},{fx:3,vol:'1500♂/950♀',vM:10.8,pM:null,ex:'V11.4Gy<37%'},{fx:4,vol:'1500♂/950♀',vM:12,pM:null,ex:'V12.8Gy<37%'},{fx:5,vol:'1500♂/950♀',vM:12.5,pM:null,ex:'V13.5Gy<37%'},{fx:8,vol:'1500♂/950♀',vM:14.4,pM:null,ex:'V15.2Gy<37%'},{fx:10,vol:'1500♂/950♀',vM:15,pM:null,ex:'—'},{fx:15,vol:'1500♂/950♀',vM:16.5,pM:null,ex:'—'},{fx:20,vol:'1500♂/950♀',vM:18,pM:null,ex:'—'},{fx:30,vol:'1500♂/950♀',vM:18,pM:null,ex:'—'}],note:'Excluir GTV y vías aéreas.'},heart:{rows:[{fx:1,vol:'<15cm³',vM:16,pM:22},{fx:2,vol:'<15cm³',vM:20,pM:26},{fx:3,vol:'<15cm³',vM:24,pM:30},{fx:4,vol:'<15cm³',vM:28,pM:34},{fx:5,vol:'<15cm³',vM:32,pM:38},{fx:8,vol:'<15cm³',vM:34.4,pM:40},{fx:10,vol:'<15cm³',vM:36.6,pM:null},{fx:15,vol:'<15cm³',vM:42,pM:null},{fx:20,vol:'<15cm³',vM:46,pM:null},{fx:30,vol:'<15cm³',vM:60,pM:null,ex:'<20%vol≤40Gy'}],note:'Incluir saco pericárdico.'},brachial:{rows:[{fx:1,vol:'<3cm³',vM:13.6,pM:16.4},{fx:2,vol:'<3cm³',vM:17.8,pM:21.2},{fx:3,vol:'<3cm³',vM:22,pM:26},{fx:4,vol:'<3cm³',vM:24.8,pM:29.6},{fx:5,vol:'<3cm³',vM:27,pM:32.5},{fx:8,vol:'<3cm³',vM:32.8,pM:39.2},{fx:10,vol:'<3cm³',vM:37,pM:null},{fx:15,vol:'<3cm³',vM:48,pM:null},{fx:20,vol:'<3cm³',vM:54,pM:null},{fx:30,vol:'<3cm³',vM:62,pM:null}],note:'C5-T2. Referencia: vasos subclavios/axilares.'}};
+const ORGANS={cord:{label:'Médula espinal',ab:2,tH:1.5,info:'α/β=2 · T½=1.5h. Tol Dmax EQD2 ≤50 Gy₂. Con ≥6m se acepta hasta ~60 Gy (Nieder 2006). Schröder 2020: máx 68.3 Gy₂ sin mielopatía.',zones:[{from:0,to:50,fill:'#1a7a4a',label:'≤ 50 Gy',src:'Nieder 2006',sp:'sp-obs',desc:'Tolerancia convencional — riesgo mielopatía <1%'},{from:50,to:57,fill:'#c8861a',label:'50–57 Gy',src:'ARS 2025',sp:'sp-ars',desc:'Zona de cautela — ARS 2025 Dmax <57 Gy en re-RT'},{from:57,to:60,fill:'#b02020',label:'57–60 Gy',src:'Nieder 2006',sp:'sp-obs',desc:'Límite absoluto con intervalo ≥6m y sin síntomas tardíos'},{from:60,to:null,fill:'#6a1010',label:'> 60 Gy',src:'Schröder 2020',sp:'sp-obs',desc:'Máx observado 68.3 Gy₂ sin mielopatía (n=6) — datos muy limitados'}],maxBar:75,rec:{oT:12,cT:18,mT:24,oR:.50,cR:.35,mR:.25,minM:6,ev:'<strong>Ang et al. (2001)</strong>: T½rec ~12–18m, máx ~50%. <strong>Nieder (2006)</strong>: con C1≤50 Gy e intervalo ≥6m, recuperación 25–50%. <strong>ESTRO CS-13</strong>: documentar FR.',refs:['Ang KK et al. Int J Radiat Oncol Biol Phys. 2001;51(4):1020-7.','Nieder C et al. Int J Radiat Oncol Biol Phys. 2006;66(5):1376-82.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.']}},esophagus:{label:'Esófago',ab:10,tH:1.5,info:'α/β=10 · T½=1.5h. Schröder 2020: D0.1cc mediana 62 Gy₃, máx 103 Gy₃. RETHO 2026: Dmax≤100 Gy₁₀ sin G4-G5. ARS 2025: Dmax<100 Gy₃.',zones:[{from:0,to:70,fill:'#1a7a4a',label:'≤ 70 Gy',src:'QUANTEC 2010',sp:'sp-obs',desc:'Zona segura — mediana Schröder 2020: 62 Gy₃'},{from:70,to:100,fill:'#c8861a',label:'70–100 Gy',src:'ARS 2025',sp:'sp-ars',desc:'ARS 2025: Dmax <100 Gy₃. RETHO 2026 sin G4-5'},{from:100,to:null,fill:'#b02020',label:'> 100 Gy',src:'ARS 2025',sp:'sp-ars',desc:'Supera límite ARS 2025. Riesgo de toxicidad esofágica severa'}],maxBar:130,rec:{oT:6,cT:9,mT:12,oR:.60,cR:.40,mR:.25,minM:3,ev:'<strong>Hauer-Jensen (2014)</strong>: alta repoblación mucosa. <strong>Schröder 2020</strong>: mayoría con ~70 Gy₃ sin G3. <strong>RETHO 2026</strong>: sin G4-5 con Dmax≤100 Gy₁₀. <strong>ARS 2025</strong>: Dmax<100 Gy₃.',refs:['Schröder C et al. Radiother Oncol. 2020;152:56-62.','Cammareri E, Duijm M et al. Int J Radiat Oncol Biol Phys. 2026;124(5):1329-39.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.']}},trachea:{label:'Árbol bronquial / bronquio principal',ab:3,tH:1.5,info:'α/β=3 · T½=1.5h. <strong>Todos los umbrales en EQD2 con α/β=3 Gy.</strong> Objetivo <80 Gy₃ (Rulach 2021). NTCP <5% G≥3 a 100 Gy₃. Límite absoluto <110 Gy₃ (ARS 2025).',zones:[{from:0,to:80,fill:'#1a7a4a',label:'≤ 80 Gy',src:'Rulach 2021',sp:'sp-rul',desc:'Objetivo Delphi internacional — 66.7% acuerdo. Mediana Schröder 2020: 74 Gy₃ sin necrosis'},{from:80,to:100,fill:'#c8861a',label:'80–100 Gy',src:'NTCP 2024',sp:'sp-ntcp',desc:'NTCP model (Chen/Nordic HILUS): a 100 Gy₃ → CP G≥3 del 4.9% (IC95%: 0–11.4%) — α/β=3'},{from:100,to:110,fill:'#b02020',label:'100–110 Gy',src:'ARS 2025',sp:'sp-ars',desc:'ARS 2025 Dmax <110 Gy₃ límite absoluto. RETHO 2026: ≤110 Gy₁₀ sin G4-5 (n=60)'},{from:110,to:null,fill:'#6a1010',label:'> 110 Gy',src:'Schröder 2020',sp:'sp-obs',desc:'Sin evidencia prospectiva. Máx 187 Gy₃ sin G3 (n=7) — no recomendado'}],maxBar:140,rec:{oT:12,cT:18,mT:24,oR:.30,cR:.20,mR:.10,minM:6,ev:'<strong>Rulach 2021</strong>: objetivo <80 Gy₃, máx 105 Gy₃ (α/β=3). <strong>NTCP 2024</strong>: umbral 100 Gy₃ → ~5% G≥3. <strong>ARS 2025</strong>: Dmax <110 Gy₃. <strong>RETHO 2026</strong>: ≤110 Gy₁₀ sin G4-5. Todos en α/β=3 Gy.',refs:['Rulach R et al. Adv Radiat Oncol. 2021;6:100653.','Chen et al./Nordic HILUS NTCP. Clin Transl Radiat Oncol. 2024.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.','Cammareri E, Duijm M et al. Int J Radiat Oncol Biol Phys. 2026;124(5):1329-39.']}},lung:{label:'Pulmón (global)',ab:3,tH:1.5,info:'α/β=3. Estructura paralela. Schröder 2020: Dmedia mediana 10.1 Gy₃ (máx 17.9), V20 14.9% sin neumonitis G3. ARS 2025: V20<40%.',zones:[{from:0,to:15,fill:'#1a7a4a',label:'≤ 15 Gy',src:'QUANTEC 2010',sp:'sp-obs',desc:'Dmedia <15 Gy: riesgo neumonitis <20%. Mediana Schröder 2020: 10.1 Gy₃'},{from:15,to:20,fill:'#c8861a',label:'15–20 Gy',src:'ARS 2025',sp:'sp-ars',desc:'ARS 2025: V20 <40% re-RT. Máx Schröder 2020: 17.9 Gy₃'},{from:20,to:null,fill:'#b02020',label:'> 20 Gy',src:'ARS 2025',sp:'sp-ars',desc:'Supera tolerancia QUANTEC y ARS 2025 — alto riesgo de neumonitis'}],maxBar:35,rec:{oT:6,cT:12,mT:18,oR:.40,cR:.25,mR:.15,minM:3,ev:'<strong>Schröder 2020</strong>: Dmedia 10.1 Gy₃ sin G3. <strong>Marks QUANTEC (2010)</strong>: Dmedia <20 Gy. <strong>ARS 2025</strong>: V20 <40%. <strong>RETHO 2026</strong>: G3 neumonitis 12%.',refs:['Schröder C et al. Radiother Oncol. 2020;152:56-62.','Marks LB et al. Int J Radiat Oncol Biol Phys. 2010;76(3 Suppl):S70-6.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.']}},heart:{label:'Corazón / pericardio',ab:2,tH:2.5,info:'α/β=2 · T½=2.5h. Schröder 2020: D0.1cc >70 Gy₂ solo en 4 pacientes (máx 81 Gy₂) sin complicaciones. ARS 2025: V40<50%.',zones:[{from:0,to:40,fill:'#1a7a4a',label:'≤ 40 Gy',src:'QUANTEC 2010',sp:'sp-obs',desc:'Dmedia <26 Gy → efusión pericárdica <15% (QUANTEC)'},{from:40,to:60,fill:'#c8861a',label:'40–60 Gy',src:'ARS 2025',sp:'sp-ars',desc:'ARS 2025: V40 <50%. Schröder 2020: máx 81 Gy₂ sin complicaciones'},{from:60,to:null,fill:'#b02020',label:'> 60 Gy',src:'ARS 2025',sp:'sp-ars',desc:'Supera límite recomendado — riesgo de toxicidad cardiaca tardía'}],maxBar:100,rec:{oT:12,cT:24,mT:36,oR:.30,cR:.20,mR:.10,minM:6,ev:'<strong>Darby et al. (2013)</strong>: efectos cardiovasculares tardíos progresivos. <strong>ARS 2025</strong>: V40 <50%.',refs:['Darby SC et al. N Engl J Med. 2013;368(11):987-98.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.']}},brachial:{label:'Plexo braquial',ab:2,tH:1.5,info:'α/β=2 · T½=1.5h. ARS 2025: Dmax <85 Gy₂ en re-irradiación. Alta sensibilidad a dosis/fx altas y reparación incompleta BID.',zones:[{from:0,to:66,fill:'#1a7a4a',label:'≤ 66 Gy',src:'Timmermann 2022',sp:'sp-obs',desc:'Tolerancia estándar primer curso (Timmermann Tables)'},{from:66,to:85,fill:'#c8861a',label:'66–85 Gy',src:'ARS 2025',sp:'sp-ars',desc:'ARS 2025: Dmax <85 Gy₂ re-RT — zona de vigilancia estrecha'},{from:85,to:null,fill:'#b02020',label:'> 85 Gy',src:'ARS 2025',sp:'sp-ars',desc:'Supera límite absoluto ARS 2025 — riesgo de neuropatía actínica severa'}],maxBar:110,rec:{oT:12,cT:18,mT:24,oR:.40,cR:.25,mR:.15,minM:6,ev:'<strong>Nieder et al. (2006)</strong>: T½rec ~12–18m. <strong>ARS 2025</strong>: Dmax <85 Gy₂.',refs:['Nieder C et al. Int J Radiat Oncol Biol Phys. 2006;66(5):1376-82.','Simone CB 2nd et al. (ARS). Int J Radiat Oncol Biol Phys. 2025;123(1):204-220.']}}};
+
+let fxMode='QD',scen='cons',oarMode='pct';
+
+const AB_DATA={"cord": {"ab": 2, "text": "α/β ≈ 2 Gy — tejido nervioso. Estimado en modelos preclínicos (médula canina y de rata). Van der Kogel 1993; Macbeth et al. 1996. No hay medición directa en humanos fiable."}, "esophagus": {"ab": 10, "text": "α/β ≈ 10 Gy — mucosa esofágica de respuesta rápida. La toxicidad limitante es esofagitis aguda (respuesta temprana). Werner-Wasik QUANTEC 2010; Thames et al. 1990."}, "trachea": {"ab": 3, "text": "α/β ≈ 3 Gy — asumido por analogía con tejido cartilaginoso/fibromuscular tardío. No hay dato directo humano para árbol bronquial. Convención clínica estándar."}, "lung": {"ab": 3, "text": "α/β ≈ 3 Gy para fibrosis tardía (efecto limitante). El componente inflamatorio agudo (neumonitis) tiene α/β ~10. Se usa 3 para el efecto tardío. Marks QUANTEC 2010."}, "heart": {"ab": 2, "text": "α/β ≈ 2 Gy — fibrosis miocárdica y pericárdica. Tejido de respuesta muy tardía, comportamiento similar al tejido nervioso. Gagliardi QUANTEC 2010; van der Kogel 2009."}, "brachial": {"ab": 2, "text": "α/β ≈ 2 Gy — tejido nervioso periférico. Por analogía con médula espinal. No hay dato directo humano fiable para plexo braquial. Joiner & van der Kogel 2009."}};
+
+function getAb(){
+  const preset=document.getElementById('ab_preset').value;
+  if(preset==='custom') return parseFloat(document.getElementById('ab_custom').value)||3;
+  return parseFloat(preset)||3;
+}
+function applyAbPreset(){
+  const v=document.getElementById('ab_preset').value;
+  document.getElementById('ab_custom_wrap').style.display=v==='custom'?'block':'none';
+}
+function updateAbUI(){
+  const ok=document.getElementById('organ').value;
+  const d=AB_DATA[ok];
+  if(!d) return;
+  // Set preset select
+  const sel=document.getElementById('ab_preset');
+  const v=String(d.ab);
+  let found=false;
+  for(let i=0;i<sel.options.length;i++){if(sel.options[i].value===v){sel.selectedIndex=i;found=true;break;}}
+  if(!found){sel.value='custom';document.getElementById('ab_custom').value=d.ab;document.getElementById('ab_custom_wrap').style.display='block';}
+  else document.getElementById('ab_custom_wrap').style.display='none';
+  document.getElementById('ab_evidence_text').textContent=d.text;
+}
+
+function setScen(s){scen=s;['opt','cons','min'].forEach(x=>{document.getElementById('card-'+x).className='scen-card'+(s===x?' s-'+x:'');});calculate();}
+function setOarMode(m){oarMode=m;['pct','dvh','presc'].forEach(x=>{document.getElementById('oar-btn-'+x).className='oar-btn'+(m===x?' act':'');document.getElementById('oar-'+x+'-panel').style.display=m===x?'block':'none';});calculate();}
+function updateOarPct(){const p=parseInt(document.getElementById('oar_pct').value)||50;document.getElementById('oar_pct_show').textContent=p+'%';document.getElementById('oar_pct_equiv').textContent='= '+(gn('d1t')*p/100).toFixed(1)+' Gy al OAR';}
+function setMode(m){
+  fxMode=m;
+  ['qd','bid','sbrt'].forEach(x=>{const b=document.getElementById('tab-'+x);b.className='tab-btn'+(m.toLowerCase()===x?' tab-act-'+x:'');});
+  document.getElementById('bid-panel').style.display=m==='BID'?'block':'none';
+  document.getElementById('sbrt-panel').style.display=m==='SBRT'?'block':'none';
+  if(m==='QD'){sv('d1t','60');sv('d1n','30');}if(m==='BID'){sv('d1t','72');sv('d1n','60');}if(m==='SBRT'){sv('d1t','60');sv('d1n','8');}
+  calculate();
+}
+function updateOrganInfo(){const ok=document.getElementById('organ').value;document.getElementById('organ-info').innerHTML=ORGANS[ok].info;updateAbUI();}
+function sv(id,v){document.getElementById(id).value=v;}
+function gn(id){return parseFloat(document.getElementById(id).value)||0;}
+function gi(id){return Math.max(1,parseInt(document.getElementById(id).value)||1);}
+function leaC(tH,h){const mu=Math.LN2/tH,muT=mu*h;return 2*(muT-1+Math.exp(-muT))/(muT*muT);}
+function calcE(dT,dpf,ab){return dpf>0&&ab>0?dT*(dpf+ab)/(2+ab):0;}
+function calcEB(dT,dpf,ab,g){return dpf>0&&ab>0?dT*(dpf*g+ab)/(2+ab):0;}
+function calcRF(months,rec,s){if(months<rec.minM)return 0;const tH=s==='opt'?rec.oT:s==='cons'?rec.cT:rec.mT,mR=s==='opt'?rec.oR:s==='cons'?rec.cR:rec.mR;return Math.min(mR*(1-Math.exp(-Math.LN2/tH*months)),mR);}
+function closestFx(rows,fx){return rows.find(r=>r.fx===fx)||rows.reduce((a,b)=>Math.abs(b.fx-fx)<Math.abs(a.fx-fx)?b:a);}
+function getOarDose(d1t,d1n,d1dpf,ab){
+  if(oarMode==='pct'){const p=(parseInt(document.getElementById('oar_pct').value)||50)/100,gy=d1t*p;return{gy,dpf:gy/d1n,eqd2:calcE(gy,gy/d1n,ab),label:(p*100).toFixed(0)+'% Dprescrita'};}
+  if(oarMode==='dvh'){const gy=gn('oar_dvh_gy');return{gy,dpf:gy/d1n,eqd2:calcE(gy,gy/d1n,ab),label:{dmax:'Dmax',dmean:'Dmedia',d1cc:'D1cc'}[document.getElementById('oar_dvh_param').value]+' DVH'};}
+  return{gy:d1t,dpf:d1dpf,eqd2:calcE(d1t,d1dpf,ab),label:'Peor caso'};
+}
+function renderBar(org,ecum){
+  const W=600,H=26,maxB=org.maxBar;
+  let rects='',lines='';
+  org.zones.forEach((z,i)=>{const x0=Math.min(z.from,maxB)/maxB*W,x1=(z.to===null?maxB:Math.min(z.to,maxB))/maxB*W,w=Math.max(0,x1-x0);rects+=`<rect x="${x0.toFixed(1)}" y="0" width="${w.toFixed(1)}" height="${H}" fill="${z.fill}"/>`;if(i>0&&z.from<maxB){const lx=(z.from/maxB*W).toFixed(1);lines+=`<line x1="${lx}" y1="0" x2="${lx}" y2="${H}" stroke="rgba(255,255,255,.3)" stroke-width="1.5"/>`;}});
+  const mx=Math.min(Math.max(ecum/maxB*W,2),W-2);
+  const marker=`<line x1="${mx.toFixed(1)}" y1="0" x2="${mx.toFixed(1)}" y2="${H}" stroke="white" stroke-width="2.5"/><polygon points="${mx.toFixed(1)},${H+1} ${(mx-5).toFixed(1)},${H+9} ${(mx+5).toFixed(1)},${H+9}" fill="#2471d4"/>`;
+  const ticks=[0,Math.round(maxB*.25),Math.round(maxB*.5),Math.round(maxB*.75),maxB];
+  let tl='';ticks.forEach(t=>{const tx=(t/maxB*W).toFixed(1),anc=t===0?'start':t===maxB?'end':'middle';tl+=`<text x="${tx}" y="${H+22}" text-anchor="${anc}" font-size="10" font-family="DM Mono,monospace" fill="#6b7a96">${t} Gy</text>`;});
+  const va=mx>W*.75?'end':mx<W*.25?'start':'middle';tl+=`<text x="${mx.toFixed(1)}" y="${H+22}" text-anchor="${va}" font-size="11" font-weight="500" font-family="DM Mono,monospace" fill="#2471d4">${ecum.toFixed(1)} Gy</text>`;
+  document.getElementById('bar-label').textContent='Umbrales clínicos con fuentes — EQD2 (α/β = '+ab+' Gy)';
+  document.getElementById('thr-svg').innerHTML=`<svg viewBox="0 0 ${W} ${H+30}" width="100%" style="display:block;overflow:visible;"><defs><clipPath id="bc"><rect x="0" y="0" width="${W}" height="${H}" rx="3"/></clipPath></defs><g clip-path="url(#bc)">${rects}${lines}</g>${marker}${tl}</svg>`;
+  let cz=org.zones[org.zones.length-1];for(let i=0;i<org.zones.length;i++){if(ecum<(org.zones[i].to===null?Infinity:org.zones[i].to)){cz=org.zones[i];break;}}
+  document.getElementById('thr-detail').innerHTML=org.zones.map(z=>{const act=z===cz;return`<div class="thr-row${act?' active':''}"><span class="src-pill ${z.sp}">${z.src}</span><span style="min-width:88px;">${z.label}</span><span>${z.desc}</span>${act?'<span class="curr-tag">← actual</span>':''}</div>`;}).join('');
+  return{zc:cz.fill==='#1a7a4a'?'ok':cz.fill==='#c8861a'?'warn':'dng',cz};
+}
+function renderTimTable(ok,fx,dpf,gy,ab){
+  const tim=TIM[ok],haspt=tim.rows.some(r=>r.pM!==null);
+  let h=`<tr><th>Fx</th><th>Vol</th><th>Vol max</th>${haspt?'<th>Dmax</th>':''}<th></th></tr>`;
+  tim.rows.forEach(r=>{const m=r.fx===fx;h+=`<tr class="${m?'tim-match':''}"><td style="font-family:var(--mono)">${r.fx}fx</td><td>${r.vol}</td><td><strong>${r.vM} Gy</strong></td>${haspt?`<td>${r.pM!==null?'<strong>'+r.pM+' Gy</strong>':'—'}</td>`:''}<td style="font-size:10px;color:var(--gray-500)">${r.ex||''}</td></tr>`;});
+  document.getElementById('tim-table').innerHTML=h;
+  const safeT=ORGANS[ok].zones[0].to||ORGANS[ok].maxBar,p=calcE(gy,dpf,ab)/safeT*100;
+  let al='';if(dpf>=8)al+=`<div class="alert al-warn" style="margin-top:8px;">Dosis/fx ≥8 Gy: considerar modelo LQ-L.</div>`;if(p>70)al+=`<div class="alert al-dng" style="margin-top:6px;">C1 SBRT consume el <strong>${p.toFixed(0)}%</strong> de la zona segura. Margen muy limitado.</div>`;else if(p>50)al+=`<div class="alert al-warn" style="margin-top:6px;">C1 SBRT consume el <strong>${p.toFixed(0)}%</strong> de la zona segura.</div>`;
+  document.getElementById('sbrt-alert').innerHTML=al;
+}
+function calculate(){
+  const ok=document.getElementById('organ').value,org=ORGANS[ok],ab=getAb(),tH=org.tH,rec=org.rec;
+  const d1t=gn('d1t'),d1n=gi('d1n'),d1dpf=d1t/d1n,d2t=gn('d2t'),d2n=gi('d2n'),d2dpf=d2t/d2n,months=gn('months');
+  document.getElementById('d1dpf_show').textContent=d1dpf.toFixed(2)+' Gy';
+  document.getElementById('d2dpf_show').textContent=d2dpf.toFixed(2)+' Gy';
+  document.getElementById('months-yr').textContent=months>0?`(${(months/12).toFixed(1)} años)`:'';
+  updateOarPct();
+  const oar=getOarDose(d1t,d1n,d1dpf,ab);
+  document.getElementById('oar_gy_used').textContent=oar.gy.toFixed(1)+' Gy';
+  document.getElementById('oar_eqd2_show').textContent=oar.eqd2.toFixed(1)+' Gy (EQD2)';
+  let e1used=oar.eqd2,e1std=oar.eqd2,gF=1;
+  if(fxMode==='BID'){const bi=gn('bid_h')||6;gF=leaC(tH,bi);e1used=calcEB(oar.gy,oar.dpf,ab,gF);e1std=oar.eqd2;document.getElementById('g-factor').textContent=gF.toFixed(3);const diff=e1used-e1std,pD=e1std>0?diff/e1std*100:0;document.getElementById('corr-info').innerHTML=bi<6?`Intervalo ${bi}h → reparación <strong>incompleta</strong>. g=${gF.toFixed(3)} → EQD2 real <strong>${Math.abs(pD).toFixed(1)}% mayor</strong>.`:`Intervalo ${bi}h → reparación prácticamente completa (g≈1).`;document.getElementById('eqd2-cmp').innerHTML=`<div style="background:var(--orange-bg);border:1px solid #e8a030;border-radius:6px;padding:8px 12px;"><div style="font-size:10px;color:var(--orange);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;">EQD2 LQ estándar</div><div style="font-family:var(--mono);font-size:15px;font-weight:500;">${e1std.toFixed(1)} Gy</div></div><div style="background:#fff8ec;border:1px solid var(--orange);border-radius:6px;padding:8px 12px;"><div style="font-size:10px;color:var(--orange);font-family:var(--mono);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;">EQD2 Lea-Catcheside</div><div style="font-family:var(--mono);font-size:15px;font-weight:500;color:var(--orange);">${e1used.toFixed(1)} Gy${e1used-e1std>0.1?' ▲':''}</div></div>`;}
+  if(fxMode==='SBRT') renderTimTable(ok,d1n,oar.dpf,oar.gy,ab);
+  const rfo=calcRF(months,rec,'opt'),rfc=calcRF(months,rec,'cons'),rfm=calcRF(months,rec,'min'),rf=scen==='opt'?rfo:scen==='cons'?rfc:rfm,tHu=scen==='opt'?rec.oT:scen==='cons'?rec.cT:rec.mT,mRu=scen==='opt'?rec.oR:scen==='cons'?rec.cR:rec.mR,scnLbl=scen==='opt'?'Optimista':scen==='cons'?'Conservador':'Mínimo';
+  document.getElementById('rec-grid').innerHTML=[{lbl:'Optimista',t:rec.oT,r:rec.oR,v:rfo,col:var_green},{lbl:'Conservador ✓',t:rec.cT,r:rec.cR,v:rfc,col:'var(--blue-700)'},{lbl:'Mínimo',t:rec.mT,r:rec.mR,v:rfm,col:'var(--orange)'}].map(x=>`<div class="rec-num-cell" style="border-color:${x.col}40;"><div class="rec-num-label">${x.lbl}<br>T½=${x.t}m, máx ${(x.r*100).toFixed(0)}%</div><div class="rec-num-val" style="color:${x.col}">${(x.v*100).toFixed(1)}%</div></div>`).join('');
+  document.getElementById('rec-formula').innerHTML=`FR = R<sub>máx</sub>·(1−e<sup>−λt</sup>) · <strong>${scnLbl}</strong>: T½=${tHu}m, R<sub>máx</sub>=${(mRu*100).toFixed(0)}%, <strong>FR=${(rf*100).toFixed(1)}%</strong>`;
+  document.getElementById('rec-ev').innerHTML=rec.ev;
+  const e2=calcE(d2t,d2dpf,ab),e1adj=e1used*(1-rf),ecum=e1adj+e2;
+  const {zc,cz}=renderBar(org,ecum);
+  const bMap={ok:'rb-ok',warn:'rb-warn',dng:'rb-dng'},bTxt={ok:'Dentro de umbrales',warn:'Zona de cautela',dng:'Supera umbrales'};
+  document.getElementById('risk-badge').className='rbadge '+bMap[zc];document.getElementById('risk-badge').textContent=bTxt[zc];document.getElementById('res-title').textContent=org.label;
+  const sb=document.getElementById('sbrt-badge');if(fxMode==='SBRT'&&oar.dpf>=5){const p=e1std/(org.zones[0].to||org.maxBar)*100;sb.style.display='inline-block';sb.textContent=`C1 SBRT: ${p.toFixed(0)}% zona segura`;}else sb.style.display='none';
+  const isBID=fxMode==='BID',oLbl=oar.label;
+  const metrics=[{l:`EQD2 C1 (${oLbl})`,v:e1std.toFixed(1),u:'Gy',c:''},{l:`Recovery factor (${scnLbl})`,v:(rf*100).toFixed(1),u:'%',c:'ok'},{l:'EQD2 ajustado C1',v:e1adj.toFixed(1),u:'Gy',c:''},{l:'EQD2 curso 2',v:e2.toFixed(1),u:'Gy',c:''},{l:'EQD2 acumulada',v:ecum.toFixed(1),u:'Gy',c:zc==='ok'?'hi':zc==='warn'?'wrn':'dng'}];
+  if(isBID)metrics.splice(1,0,{l:'EQD2 C1 (Lea-Catcheside)',v:e1used.toFixed(1),u:'Gy',c:'wrn'});
+  document.getElementById('res-grid').innerHTML=metrics.map(m=>`<div class="metric ${m.c}"><div class="metric-label">${m.l}</div><div class="metric-value">${m.v} <span class="metric-unit">${m.u}</span></div></div>`).join('');
+  const tRef=closestFx(TIM[ok].rows,d2n),ptS=tRef.pM!==null?` · Dmax ≤${tRef.pM} Gy`:'';
+  document.getElementById('tim-c2').innerHTML=`<div class="tim-c2-box"><strong>Timmermann — nuevo curso (${d2n===tRef.fx?d2n+'fx':'~'+tRef.fx+'fx'}):</strong> Vol max ≤${tRef.vM} Gy${ptS}${tRef.ex?' · '+tRef.ex:''} · <span style="opacity:.7;font-size:10px;">${TIM[ok].note}</span></div>`;
+  const items=[];let lvl=zc,title='',concl='';
+  if(months<rec.minM){items.push({d:'ddng',t:`Intervalo ${months}m < ${rec.minM}m mínimo → FR=0.`});lvl='dng';}else if(months<12)items.push({d:'dwrn',t:`Intervalo ${months}m: recuperación limitada. Preferible ≥12m.`});else items.push({d:'dok',t:`Intervalo ${months}m adecuado. FR=${(rf*100).toFixed(1)}% (escenario ${scnLbl}).`});
+  if(oarMode==='pct')items.push({d:'dinf',t:`Dosis OAR estimada como ${document.getElementById('oar_pct').value}% de la prescrita (${oar.gy.toFixed(1)} Gy). Si dispones del DVH real, úsalo para mayor precisión.`});else if(oarMode==='dvh')items.push({d:'dok',t:`Dosis OAR desde DVH: ${oar.gy.toFixed(1)} Gy (${document.getElementById('oar_dvh_param').value}). Mayor precisión.`});else items.push({d:'dwrn',t:`Peor caso: dosis OAR = dosis prescrita (${oar.gy.toFixed(1)} Gy). Sobreestima la dosis real.`});
+  items.push({d:zc==='ok'?'dok':zc==='warn'?'dwrn':'ddng',t:`EQD2 acumulada ${ecum.toFixed(1)} Gy → <strong>${cz.label}</strong>: ${cz.desc} <span class="src-pill ${cz.sp}" style="font-size:10px;">${cz.src}</span>`});
+  if(months>6)items.push({d:'dok',t:`Intervalo >6m: OS significativamente mayor en Schröder 2020 (22 vs 14m, p=0.034). RETHO 2026 exigió ≥9m.`});
+  items.push({d:'dinf',t:`ESTRO CS-13 (Appelt 2026): documentar método de estimación, FR, escenario e incertidumbres. Revisión multidisciplinar obligatoria.`});
+  if(lvl==='ok'){title='Factible — dentro de umbrales clínicos';concl='EQD2 acumulada dentro de los rangos respaldados por evidencia. Proceder con planificación 3D, acumulación EQD2 y revisión multidisciplinar.';}
+  else if(lvl==='warn'){title='Factible con cautela — revisión multidisciplinar obligatoria';concl='EQD2 en zona de cautela. Re-irradiación potencialmente viable en pacientes seleccionados. Requiere acumulación 3D, DVH real y aprobación en tumor board.';}
+  else{title='No recomendado sin modificación del plan';concl='EQD2 supera umbrales de seguridad. Considerar reducir dosis del C2, aumentar el intervalo o replantear la estrategia terapéutica.';}
+  document.getElementById('rec-box').innerHTML=`<div class="rec-box rec-${lvl}"><div class="rec-title">Recomendación clínica: ${title}</div><div class="rec-items">${items.map(i=>`<div class="rec-item"><div class="rdot ${i.d}"></div><div>${i.t}</div></div>`).join('')}</div><div class="rec-concl">${concl}</div></div>`;
+  document.getElementById('note-txt').innerHTML=`Modelo LQ · α/β=${ab} Gy${fxMode==='BID'?' · Lea-Catcheside: T½rep='+tH+'h':''}${fxMode==='SBRT'?' · Para dosis/fx ≥8 Gy considerar LQ-L':''} · Dosis OAR C1: ${oLbl} · FR=${(rf*100).toFixed(1)}% · Método B ESTRO Appelt 2026. Esta herramienta es de apoyo clínico y no sustituye la acumulación dosimétrica 3D ni el criterio del comité multidisciplinar.`;
+  const allRefs=[...new Set([...rec.refs,'Schröder C et al. Radiother Oncol. 2020;152:56-62.','Cammareri E, Duijm M et al. Int J Radiat Oncol Biol Phys. 2026;124(5):1329-39.','Appelt AL et al. (ESTRO). Radiother Oncol. 2026;214:111313.','Timmerman R. Int J Radiat Oncol Biol Phys. 2022;112(1):4-21.','Paradis KC, Matuszak MM. Semin Radiat Oncol. 2020;30:204-11.'])];
+  document.getElementById('refs-block').innerHTML='Referencias · References:<br>'+allRefs.map(r=>`· ${r}`).join('<br>');
+}
+const var_green='#1a7a4a';
+setMode('QD');updateOrganInfo();setOarMode('pct');
+</script>
+</body>
+</html>
